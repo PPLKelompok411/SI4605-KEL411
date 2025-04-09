@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tambah Artikel</title>
+  <link rel="stylesheet" href="tambahArtikel_styles.css" />
+  <style>
+    main {
+      padding-top: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <span class="logo">RE:FOOD</span>
+    </div>
+    <div class="nav-right">
+      <img src="https://img.icons8.com/ios/50/000000/appointment-reminders--v1.png" width="20" alt="Notifikasi" class="icon" />
+      <span class="admin-name">Admin</span>
+      <img src="https://i.pravatar.cc/40" width="32" alt="Profile" class="avatar" />
+    </div>
+  </nav>
+
+  <!-- FORM WRAPPER -->
+  <div class="form-wrapper">
+    <div class="back-button">
+      <a href="#" class="back-link">← Ubah detail</a>
+    </div>
+
+    <div class="bg-white container">
+      <form class="form">
+        <label for="judul">Judul Artikel</label>
+        <input type="text" id="judul" placeholder="cth: Pengertian Waste Food" />
+
+        <label for="deskripsi">Deskripsi</label>
+        <textarea id="deskripsi" rows="3" placeholder="cth: Wasted Food adalah sisa makanan masih layak konsumsi yang terbuang sebagai sampah."></textarea>
+
+        <label for="tanggal">Tanggal Unggah</label>
+        <input type="text" id="tanggal" placeholder="cth: 01-Jan-2025" />
+
+        <label for="thumbnail">Foto/Thumbnail Artikel</label>
+        <div class="thumbnail-upload">
+          <input type="file" id="thumbnail" hidden />
+          <label for="thumbnail" class="upload-box">
+            <img src="https://img.icons8.com/ios/50/image--v1.png" alt="upload icon" />
+          </label>
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn cancel">Batal</button>
+          <button type="submit" class="btn save">Simpan Artikel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
