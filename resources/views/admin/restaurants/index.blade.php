@@ -1,44 +1,42 @@
-
-{{-- filepath: d:\Kuliah\Semester 6\ppl-refood\SI4605-KEL411\resources\views\admin\restaurants\index.blade.php --}}
 @extends('layouts.admin')
 
 @section('content')
 <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Restaurants</h1>
-    <a href="{{ route('restaurants.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Add Restaurant</a>
+    {{-- Title & Button --}}
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-3xl font-bold text-gray-800">Restaurants</h1>
+        <a href="{{ route('restaurants.create') }}" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition">Add Restaurant</a>
+    </div>
 
+    {{-- Success Message --}}
     @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-4 rounded mt-4">
+        <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-4">
             {{ session('success') }}
         </div>
     @endif
 
-    <table class="table-auto w-full mt-4">
-        <thead>
-            <tr>
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Description</th>
-                <th class="px-4 py-2">Discount</th>
-                <th class="px-4 py-2">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    {{-- Table --}}
+    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+        <table class="min-w-full table-auto text-left">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-gray-700">Name</th>
+                    <th class="px-6 py-3 text-gray-700">Description</th>
+                    <th class="px-6 py-3 text-gray-700">Discount</th>
+                    <th class="px-6 py-3 text-gray-700">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
             @foreach($restaurants as $restaurant)
-            <tr>
-                <td class="border px-4 py-2">{{ $restaurant->name }}</td>
-                <td class="border px-4 py-2">{{ $restaurant->description }}</td>
-                <td class="border px-4 py-2">{{ $restaurant->discount }}%</td>
-                <td class="border px-4 py-2">
-                    <a href="{{ route('restaurants.edit', $restaurant) }}" class="text-blue-500">Edit</a>
-                    <form action="{{ route('restaurants.destroy', $restaurant) }}" method="POST" class="inline-block">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-500">Delete</button>
-                    </form>
-                </td>
+            <tr class="border-t">
+                <td class="px-6 py-4">{{ $restaurant->name }}</td>
+                <td class="px-6 py-4">{{ $restaurant->description }}</td>
+                <td class="px-6 py-4">{{ $restaurant->discount_percentage }}%</td>
+                <td class="px-6 py-4">{{ $restaurant->food_type }}</td>
             </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

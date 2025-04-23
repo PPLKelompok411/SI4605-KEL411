@@ -44,30 +44,52 @@
     <div class="container mx-auto px-4 -mt-10">
         <!-- Filter Section -->
         <div class="bg-white rounded-lg shadow-md p-4 mb-8">
-            <div class="flex flex-wrap gap-4 justify-between items-center">
-                <div class="flex space-x-4">
-                    <select class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+            <form action="{{ route('restaurants.index') }}" method="GET" class="flex flex-wrap gap-4 justify-between items-center">
+                <div class="flex space-x-4 items-center">
+                    <!-- Search Input -->
+                    <div class="relative">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Search restaurant..."
+                            class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                        <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Cuisine Filter -->
+                    <select name="cuisine" class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
                         <option value="">All Cuisines</option>
-                        <option value="indonesian">Indonesian</option>
-                        <option value="western">Western</option>
-                        <option value="asian">Asian</option>
+                        <option value="indonesian" {{ request('cuisine')=='indonesian' ? 'selected':'' }}>Indonesian</option>
+                        <option value="western"     {{ request('cuisine')=='western'     ? 'selected':'' }}>Western</option>
+                        <option value="asian"       {{ request('cuisine')=='asian'       ? 'selected':'' }}>Asian</option>
                     </select>
-                    <select class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                    <!-- Discount Filter -->
+                    <select name="discount" class="border border-gray-300 rounded-lg px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500">
                         <option value="">All Discounts</option>
-                        <option value="10">10% and above</option>
-                        <option value="20">20% and above</option>
-                        <option value="30">30% and above</option>
+                        <option value="10" {{ request('discount')=='10' ? 'selected':'' }}>10% and above</option>
+                        <option value="20" {{ request('discount')=='20' ? 'selected':'' }}>20% and above</option>
+                        <option value="30" {{ request('discount')=='30' ? 'selected':'' }}>30% and above</option>
                     </select>
                 </div>
+
                 <div class="text-gray-600">
                     @if($restaurants->isEmpty())
                         <span>No restaurants available</span>
                     @else
-                        <span>{{ $restaurants->count() }} restaurants found</span>
+                        <span>{{ $restaurants->total() }} restaurants found</span>
                     @endif
                 </div>
-            </div>
+            </form>
         </div>
+
 
         <!-- Restaurants Grid -->
         @if($restaurants->isEmpty())
