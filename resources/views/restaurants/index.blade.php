@@ -44,7 +44,7 @@
     <div class="container mx-auto px-4 -mt-10">
         <!-- Filter Section -->
         <div class="bg-white rounded-lg shadow-md p-4 mb-8">
-            <form action="{{ route('restaurants.index') }}" method="GET" class="flex flex-wrap gap-4 justify-between items-center">
+            <form action="{{ route('restaurants.search') }}" method="GET" class="flex flex-wrap gap-4 justify-between items-center">
                 <div class="flex space-x-4 items-center">
                     <!-- Search Input -->
                     <div class="relative">

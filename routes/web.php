@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\DashboardController;      // ← tambahkan ini
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', [App\Http\Controllers\RestaurantController::class, 'index'])->name('frontend.home');
     Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
+    // Route untuk menampilkan form pencarian
+    Route::get('/restaurants/search', [RestaurantController::class, 'search'])->name('restaurants.search');
 });
 
 
@@ -32,7 +34,7 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware([
         'auth:admins',
-        \App\Http\Middleware\IsAdmin::class,  // ← pakai FQCN di sini
+        \App\Http\Middleware\IsAdmin::class,
     ])->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         // CRUD restaurants
@@ -40,4 +42,3 @@ Route::prefix('admin')->group(function () {
     });
     
 });
-

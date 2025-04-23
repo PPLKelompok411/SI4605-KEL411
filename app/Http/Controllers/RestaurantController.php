@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Restaurant;
+use App\Models\Restaurant;  // <-- Pastikan ini ada!
 
 class RestaurantController extends Controller
 {
+    /**
+     * Menampilkan tampilan pencarian restoran.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showSearchForm()
+    {
+        return view('layouts.search');
+    }
+
     /**
      * Display a listing of the restaurants with optional filters.
      *
@@ -42,4 +52,32 @@ class RestaurantController extends Controller
         // Kirim data ke view
         return view('restaurants.index', compact('restaurants'));
     }
+    public function search(Request $request)
+{
+    // Query yang sama seperti di index()
+    $query = Restaurant::query();
+
+    if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    if ($request->filled('cuisine')) {
+        $query->where('food_type', $request->cuisine);
+    }
+
+    if ($request->filled('discount')) {
+        $query->where('discount_percentage', '>=', (int) $request->discount);
+    }
+
+    $restaurants = $query
+        ->orderBy('created_at', 'desc')
+        ->paginate(9)
+        ->appends($request->only(['search', 'cuisine', 'discount']));
+
+    // Tampilkan halaman layouts.search, bukan index
+    return view('layouts.search', compact('restaurants'));
 }
+
+    
+}
+
