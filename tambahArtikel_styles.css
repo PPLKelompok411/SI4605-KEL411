@@ -1,0 +1,157 @@
+
+.navbar {
+    position: fixed;      
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-left .logo {
+    font-weight: bold;
+    color: #15803d;
+    font-size: 18px;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  
+  .icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+  }
+  
+  .admin-name {
+    color: #15803d;
+    font-weight: 600;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 40px;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 32px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+  
+  .form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  
+  .form input[type="text"],
+  .form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  .thumbnail-upload {
+    margin-bottom: 24px;
+  }
+  
+  .upload-box {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background-color: #f3f4f6;
+    cursor: pointer;
+  }
+  
+  .upload-box img {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  
+  .btn {
+    padding: 10px 24px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn.cancel {
+    background-color: #ffffff;
+    border: 1px solid #368A23;
+    color: #368A23;
+  }
+  
+  .btn.cancel:hover {
+    background-color: #f0fdf4;
+  }
+  
+  .btn.save {
+    background-color: #368A23;
+    color: white;
+  }
+  
+  .btn.save:hover {
+    background-color: #166534;
+  }
+
+  .form-wrapper {
+    max-width: 700px;
+    margin: 120px auto 0;
+    padding: 0 24px;
+  }
+  
+  .back-button {
+    margin-bottom: 24px;
+  }
+  
+  .back-link {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }  
