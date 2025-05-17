@@ -5,6 +5,12 @@ use App\Http\Controllers\RestaurantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\DashboardController;      // ← tambahkan ini
+use App\Http\Controllers\VoucherClaimController;
+use App\Http\Controllers\AdminProfileController;
+
+
+// Kelola klaim voucher (admin)
+Route::get('/admin/voucher-claims', [VoucherClaimController::class, 'index'])->name('kelolavoucher');
 
 
 // Frontend routes (User)
@@ -37,6 +43,12 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         // CRUD restaurants
         Route::resource('restaurants', \App\Http\Controllers\Admin\RestaurantController::class);
+
+        // Profil Admin
+        Route::get('profile', [\App\Http\Controllers\AdminProfileController::class, 'show'])->name('showprofiladmin');
+        Route::get('profile/edit', [\App\Http\Controllers\AdminProfileController::class, 'edit'])->name('editprofiladmin');
+        // Route::post('profile/update', [\App\Http\Controllers\AdminProfileController::class, 'update'])->name('admin.profile.update');
+        Route::put('profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
     });
     
 });
