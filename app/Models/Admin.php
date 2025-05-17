@@ -9,34 +9,32 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    // Nonaktifkan timestamps
+    public $timestamps = false;
+
     protected $fillable = [
+        'Restaurant_Name',
+        'Restaurant_Photo',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Automatically hash the password when it is set.
-     *
-     * @param string $value
-     * @return void
-     */
+    // 👇 Tambahan untuk UUID
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function restaurants()
+    {
+        return $this->hasMany(Restaurant::class, 'admin_id');
     }
 }
