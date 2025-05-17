@@ -1,20 +1,22 @@
 <?php
-// filepath: d:\Kuliah\Semester 6\ppl-refood\SI4605-KEL411\app\Http\Controllers\Admin\DashboardController.php
 
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
-use Illuminate\Support\Facades\DB;
+use App\Models\Admin;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalRestaurants = Restaurant::count();
-        $activeDiscounts = DB::table('restaurants')->whereNotNull('discount')->count();
-        $totalAdmins = DB::table('admins')->count(); // Menggunakan tabel admins
+        $adminId = auth()->guard('admins')->id();
 
-        return view('admin.dashboard', compact('totalRestaurants', 'activeDiscounts', 'totalAdmins'));
+        // Statistik berdasarkan admin_id
+        $totalRestaurants = Restaurant::where('admin_id', $adminId)->count();
+        $activeDiscounts = Restaurant::where('admin_id', $adminId)->where('discount_percentage', '>', 0)->count();
+
+        return view('admin.dashboard', compact('totalRestaurants', 'activeDiscounts'));
     }
 }

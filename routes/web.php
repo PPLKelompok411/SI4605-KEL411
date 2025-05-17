@@ -13,15 +13,12 @@ use App\Http\Controllers\AdminProfileController;
 Route::get('/admin/voucher-claims', [VoucherClaimController::class, 'index'])->name('kelolavoucher');
 
 
-// Frontend routes (User)
-Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', [App\Http\Controllers\RestaurantController::class, 'index'])->name('frontend.home');
-    Route::get('/restaurants', [App\Http\Controllers\RestaurantController::class, 'index'])->name('restaurants.index');
-});
-
-
-
-
+// Frontend routes (User) yang bisa diakses tanpa login
+Route::get('/', [RestaurantController::class, 'index'])->name('frontend.home');
+Route::get('/restaurants', [RestaurantController::class, 'index'])->name('frontend.restaurants.index');
+Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('frontend.restaurants.show');
+Route::get('/restaurants/{id}/claim', [RestaurantController::class, 'showClaimForm'])->name('frontend.restaurants.claim');
+Route::post('/restaurants/{id}/claim', [RestaurantController::class, 'submitClaimForm'])->name('frontend.restaurants.claim.submit');
 
 // Default login route (required by Laravel for redirect)
 Route::get('login', function() {
@@ -34,11 +31,9 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [AdminLoginController::class, 'login']);
     Route::post('logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
-
-
     Route::middleware([
         'auth:admins',
-        \App\Http\Middleware\IsAdmin::class,  // ← pakai FQCN di sini
+        \App\Http\Middleware\IsAdmin::class,
     ])->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         // CRUD restaurants
@@ -51,5 +46,16 @@ Route::prefix('admin')->group(function () {
         Route::put('profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
     });
     
+});
+
+Route::prefix('super-admin')->group(function () {
+    Route::get('login', [\App\Http\Controllers\Auth\SuperAdminLoginController::class, 'showLoginForm'])->name('super_admin.login');
+    Route::post('login', [\App\Http\Controllers\Auth\SuperAdminLoginController::class, 'login']);
+    Route::post('logout', [\App\Http\Controllers\Auth\SuperAdminLoginController::class, 'logout'])->name('super_admin.logout');
+});
+
+Route::prefix('super-admin')->middleware(['auth:super_admins'])->group(function () {
+    Route::get('dashboard', [\App\Http\Controllers\Admin\SuperAdminDashboardController::class, 'index'])->name('super_admin.dashboard');
+    Route::resource('admins', \App\Http\Controllers\Admin\SuperAdminController::class);
 });
 

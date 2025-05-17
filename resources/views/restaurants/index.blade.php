@@ -42,6 +42,46 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 -mt-10">
+        @if(session('success'))
+            <div id="success-alert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6 mx-4" role="alert">
+                <strong class="font-bold">Berhasil!</strong>
+                <span class="block sm:inline">{{ session('success') }}</span>
+                
+                <!-- Loading bar -->
+                <div class="mt-2 h-1 w-full bg-green-200 rounded-full overflow-hidden">
+                    <div id="success-progress" class="h-1 bg-green-600 rounded-full w-0"></div>
+                </div>
+            </div>
+
+            <!-- Script untuk loading dan menghilangkan pesan -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const progressBar = document.getElementById('success-progress');
+                    const alert = document.getElementById('success-alert');
+                    const duration = 5000; // 5 detik
+                    const interval = 20;
+                    let width = 0;
+                    let timePassed = 0;
+                    
+                    // Fungsi untuk menggerakan progress bar dan menghilangkan pesan
+                    const timer = setInterval(function() {
+                        timePassed += interval;
+                        width = (timePassed / duration) * 100;
+                        progressBar.style.width = width + '%';
+                        
+                        if (width >= 100) {
+                            clearInterval(timer);
+                            alert.style.opacity = '0';
+                            alert.style.transition = 'opacity 0.5s ease-out';
+                            setTimeout(function() {
+                                alert.style.display = 'none';
+                            }, 500);
+                        }
+                    }, interval);
+                });
+            </script>
+        @endif
+
         <!-- Filter Section -->
         <div class="bg-white rounded-lg shadow-md p-4 mb-8">
             <div class="flex flex-wrap gap-4 justify-between items-center">
@@ -83,7 +123,7 @@
         @else
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 @foreach($restaurants as $restaurant)
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 group">
+                    <a href="{{ route('frontend.restaurants.show', $restaurant->id) }}" class="block bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 group">
                         <!-- Image Container -->
                         <div class="relative h-48 overflow-hidden">
                             <img src="{{ $restaurant->photo_url }}" alt="{{ $restaurant->name }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
@@ -99,8 +139,9 @@
                         
                         <!-- Content Container -->
                         <div class="p-6">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-green-600 transition duration-300">{{ $restaurant->name }}</h3>
-                            
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2 group-hover:text-green-600 transition duration-300">
+                                {{ $restaurant->admin->Restaurant_Name ?? 'N/A' }}
+                            </h3>
                             <div class="flex items-center text-gray-600 mb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -108,7 +149,6 @@
                                 </svg>
                                 <span class="text-sm">{{ $restaurant->address }}</span>
                             </div>
-                            
                             <div class="space-y-2 mb-4">
                                 <div class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -143,7 +183,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         @endif
