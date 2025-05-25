@@ -40,9 +40,8 @@ Route::prefix('admin')->group(function () {
         Route::resource('restaurants', \App\Http\Controllers\Admin\RestaurantController::class);
 
         // Profil Admin
-        Route::get('profile', [\App\Http\Controllers\AdminProfileController::class, 'show'])->name('showprofiladmin');
-        Route::get('profile/edit', [\App\Http\Controllers\AdminProfileController::class, 'edit'])->name('editprofiladmin');
-        // Route::post('profile/update', [\App\Http\Controllers\AdminProfileController::class, 'update'])->name('admin.profile.update');
+        //Route::get('profile', [\App\Http\Controllers\AdminProfileController::class, 'show'])->name('showprofiladmin');
+        Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('admin.profile.edit');
         Route::put('profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
     });
     
